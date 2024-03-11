@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Col, Row } from "reactstrap";
 import { ClientDTO } from "../../models/client/clientDTO";
@@ -15,9 +15,9 @@ export default function EditClient() {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
 
-  const clientService = new ClientService();
+  const clientService = useMemo(() => new ClientService(), []);
 
-  const get = async () => {
+  const get = useCallback(async () => {
     const resultGetClient: MessagingHelper<ClientDTO | null> =
       await clientService.Get(Number(id));
 
@@ -36,7 +36,7 @@ export default function EditClient() {
     setErrorMessage("");
     setClientToUpdate(client);
     setIsActive(resultGetClient.obj!.isActive);
-  };
+  }, [clientService, id, setIsActive, setClientToUpdate]);
 
   const update = async () => {
     const resultUpdate: MessagingHelper<ClientDTO | null> =
@@ -55,7 +55,7 @@ export default function EditClient() {
 
   useEffect(() => {
     get();
-  }, []);
+  }, [get]);
 
   return (
     <>
