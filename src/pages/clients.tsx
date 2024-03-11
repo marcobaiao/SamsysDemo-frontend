@@ -3,6 +3,7 @@ import { ClientService } from "../services/clientService";
 import { MessagingHelper } from "../models/helper/messagingHelper";
 import { ClientDTO } from "../models/client/clientDTO";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Clients() {
   const [clients, setClients] = useState<ClientDTO[]>([]);
@@ -54,8 +55,10 @@ export default function Clients() {
                   <td>{client.name}</td>
                   <td>{client.dateOfBirth}</td>
                   <td>{client.phoneNumber}</td>
-                  <td>{client.isActive}</td>
-                  <td>Editar</td>
+                  <td>{client.isActive ? "Sim" : "Não"}</td>
+                  <td>
+                    <Link to={`/client/edit/${client.id}`}>Editar</Link>
+                  </td>
                 </tr>
               ))}
             </tbody>
