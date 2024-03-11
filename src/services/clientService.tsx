@@ -6,6 +6,31 @@ import { MessagingHelper } from "../models/helper/messagingHelper";
 var apiBaseUrl = process.env.REACT_APP_API_URL;
 
 export class ClientService {
+  async Add(client: ClientDTO): Promise<MessagingHelper<ClientDTO | null>> {
+    try {
+      const result = await axios.post(
+        `${apiBaseUrl}client`,
+        {
+          ...client,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      return result.data;
+    } catch (ex) {
+      return new MessagingHelper<null>(
+        false,
+        "Ocorreu um erro inesperado ao adicionar o cliente.",
+        null
+      );
+    }
+  }
+
   async GetAll(): Promise<MessagingHelper<ClientDTO[]>> {
     try {
       const result = await axios.get(`${apiBaseUrl}client/all`, {
