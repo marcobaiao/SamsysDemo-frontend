@@ -1,6 +1,7 @@
 import { Table } from "reactstrap";
 import { Link } from "react-router-dom";
 import { ClientDTO } from "../models/client/clientDTO";
+import { formatDate } from "../utils/utils";
 
 interface ClientsTableProps {
   clients: ClientDTO[];
@@ -22,7 +23,7 @@ export default function ClientsTable({ clients }: ClientsTableProps) {
         {clients.map((client) => (
           <tr key={client.id}>
             <td>{client.name}</td>
-            <td>{client.dateOfBirth}</td>
+            <td>{formatDate(client.dateOfBirth)}</td>
             <td>{client.phoneNumber}</td>
             <td>{client.isActive ? "Sim" : "Não"}</td>
             <td>
