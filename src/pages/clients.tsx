@@ -1,6 +1,30 @@
 import { Col, Container, Row, Table } from "reactstrap";
+import { ClientService } from "../services/clientService";
 
 export default function Clients() {
+  const clientService = new ClientService();
+
+  const getClients = async () => {
+    let resultGetClients: MessagingHelper<ClientDTO | null> =
+      await clientService.Get(Number(id));
+
+    if (resultGetClient.success == false) {
+      setErrorMessage(resultGetClient.message);
+      setSuccessMessage("");
+      return;
+    }
+
+    var client: ClientEditDTO = {
+      name: resultGetClient.obj!.name,
+      phoneNumber: resultGetClient.obj!.phoneNumber,
+      concurrencyToken: resultGetClient.obj!.concurrencyToken,
+    };
+
+    setErrorMessage("");
+    setClientToUpdate(client);
+    setIsActive(resultGetClient.obj!.isActive);
+  };
+
   return (
     <Container>
       <Row>
