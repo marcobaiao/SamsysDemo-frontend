@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { MouseEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import { ClientDTO } from "../../models/client/clientDTO";
 import { ClientEditDTO } from "../../models/client/clientEditDTO";
@@ -14,6 +14,8 @@ export default function EditClient() {
 
   const [errorMessage, setErrorMessage] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
+
+  const navigate = useNavigate();
 
   const clientService = useMemo(() => new ClientService(), []);
 
@@ -38,7 +40,9 @@ export default function EditClient() {
     setIsActive(resultGetClient.obj!.isActive);
   }, [clientService, id, setIsActive, setClientToUpdate]);
 
-  const update = async () => {
+  const update = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
     const resultUpdate: MessagingHelper<ClientDTO | null> =
       await clientService.Update(Number(id), clientToUpdate!);
 
@@ -51,6 +55,7 @@ export default function EditClient() {
     setSuccessMessage("Cliente atualizado com sucesso");
     setErrorMessage("");
     setClientToUpdate(resultUpdate.obj!);
+    navigate("/clients");
   };
 
   useEffect(() => {
@@ -98,22 +103,6 @@ export default function EditClient() {
                 />
               </Col>
             </FormGroup>
-            <FormGroup row>
-              <Label xs={5}>Contacto: </Label>
-              <Col xs={7}>
-                <Input
-                  type="text"
-                  value={clientToUpdate?.phoneNumber ?? ""}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setClientToUpdate({
-                      ...clientToUpdate,
-                      phoneNumber: e.target.value,
-                    })
-                  }
-                />
-              </Col>
-            </FormGroup>
-
             <Row>
               <Col xl={12}>
                 <button

@@ -1,5 +1,5 @@
 export interface ClientEditDTO {
-    name?: string | null;
-    phoneNumber?: string | null;
-    concurrencyToken?: string | null;
+  name?: string | null;
+  phoneNumber?: string | null;
+  concurrencyToken?: string | null;
 }
