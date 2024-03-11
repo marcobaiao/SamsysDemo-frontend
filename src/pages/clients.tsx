@@ -1,9 +1,9 @@
-import { Col, Container, Row, Table } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import { ClientService } from "../services/clientService";
 import { MessagingHelper } from "../models/helper/messagingHelper";
 import { ClientDTO } from "../models/client/clientDTO";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import ClientsTable from "../components/clientsTable";
 
 export default function Clients() {
   const [clients, setClients] = useState<ClientDTO[]>([]);
@@ -39,30 +39,7 @@ export default function Clients() {
 
       <Row style={{ marginTop: "2em" }}>
         <Col>
-          <Table striped>
-            <thead className="table-dark">
-              <tr>
-                <th>Nome</th>
-                <th>Data de nascimento</th>
-                <th>Número de telemóvel</th>
-                <th>Ativo</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {clients.map((client) => (
-                <tr key={client.id}>
-                  <td>{client.name}</td>
-                  <td>{client.dateOfBirth}</td>
-                  <td>{client.phoneNumber}</td>
-                  <td>{client.isActive ? "Sim" : "Não"}</td>
-                  <td>
-                    <Link to={`/client/edit/${client.id}`}>Editar</Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <ClientsTable clients={clients} />
         </Col>
       </Row>
 
