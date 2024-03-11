@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Col, Row } from "reactstrap";
+import { Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import { ClientDTO } from "../../models/client/clientDTO";
 import { ClientEditDTO } from "../../models/client/clientEditDTO";
 import { MessagingHelper } from "../../models/helper/messagingHelper";
@@ -59,83 +59,101 @@ export default function EditClient() {
 
   return (
     <>
-      <div style={{ width: "100%" }}>
-        <Row>
-          <Col xl={12}>
-            <h1>Editar Cliente</h1>
-          </Col>
-        </Row>
-      </div>
+      <Row>
+        <Col xl={12}>
+          <h1>Editar Cliente</h1>
+        </Col>
+      </Row>
 
-      <div style={{ width: "20%", marginTop: "2em", display: "inline-block" }}>
-        <Row>
-          <Col xl={6} style={{ textAlign: "right" }}>
-            <label>Nome: </label>
-          </Col>
-          <Col xl={6}>
-            <input
-              type="text"
-              value={clientToUpdate?.name ?? ""}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setClientToUpdate({ ...clientToUpdate, name: e.target.value })
-              }
-            />
-          </Col>
-        </Row>
+      <Row className="mt-4 d-flex justify-content-center">
+        <Col sm={12} md={10} lg={6} xl={5}>
+          <Form>
+            <FormGroup row>
+              <Label xs={5}>Nome: </Label>
+              <Col xs={7}>
+                <Input
+                  type="text"
+                  value={clientToUpdate?.name ?? ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setClientToUpdate({
+                      ...clientToUpdate,
+                      name: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label xs={5}>Contacto: </Label>
+              <Col xs={7}>
+                <Input
+                  type="text"
+                  value={clientToUpdate?.phoneNumber ?? ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setClientToUpdate({
+                      ...clientToUpdate,
+                      phoneNumber: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label xs={5}>Contacto: </Label>
+              <Col xs={7}>
+                <Input
+                  type="text"
+                  value={clientToUpdate?.phoneNumber ?? ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setClientToUpdate({
+                      ...clientToUpdate,
+                      phoneNumber: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </FormGroup>
 
-        <Row>
-          <Col xl={6} style={{ textAlign: "right" }}>
-            <label>Contacto: </label>
-          </Col>
-          <Col xl={6}>
-            <input
-              type="text"
-              value={clientToUpdate?.phoneNumber ?? ""}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setClientToUpdate({
-                  ...clientToUpdate,
-                  phoneNumber: e.target.value,
-                })
-              }
-            />
-          </Col>
-        </Row>
+            <Row>
+              <Col xl={12}>
+                <button
+                  className="btnUpdateClient bg-primary text-white"
+                  onClick={update}
+                >
+                  Atualizar
+                </button>
+              </Col>
+            </Row>
+          </Form>
 
-        <Row>
-          <Col xl={12}>
-            <button className="btnUpdateClient" onClick={update}>
-              Atualizar
-            </button>
-          </Col>
-        </Row>
-
-        <Row>
-          <ClientStatusComponent
-            id={Number(id)}
-            isActive={isActive}
-            xl={12}
-            style={{ width: "100%", marginTop: "1em" }}
-            setErrorMessage={setErrorMessage}
-            setSuccessMessage={setSuccessMessage}
-          />
-        </Row>
-
-        {errorMessage && (
           <Row>
-            <Col xl={12} className="error">
-              {errorMessage}
-            </Col>
+            <ClientStatusComponent
+              id={Number(id)}
+              isActive={isActive}
+              xl={12}
+              style={{ width: "100%", marginTop: "1em" }}
+              setErrorMessage={setErrorMessage}
+              setSuccessMessage={setSuccessMessage}
+            />
           </Row>
-        )}
 
-        {successMessage && (
-          <Row>
-            <Col xl={12} className="success">
-              {successMessage}
-            </Col>
-          </Row>
-        )}
-      </div>
+          {errorMessage && (
+            <Row>
+              <Col xl={12} className="error">
+                {errorMessage}
+              </Col>
+            </Row>
+          )}
+
+          {successMessage && (
+            <Row>
+              <Col xl={12} className="success">
+                {successMessage}
+              </Col>
+            </Row>
+          )}
+        </Col>
+      </Row>
     </>
   );
 }

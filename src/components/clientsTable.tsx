@@ -9,7 +9,7 @@ interface ClientsTableProps {
 
 export default function ClientsTable({ clients }: ClientsTableProps) {
   return (
-    <Table striped>
+    <Table striped bordered hover>
       <thead className="table-dark">
         <tr>
           <th>Nome</th>
