@@ -1,5 +1,5 @@
 export interface ClientDTO {
-  id: number;
+  id?: number;
   name: string;
   phoneNumber: string;
   dateOfBirth: string;
