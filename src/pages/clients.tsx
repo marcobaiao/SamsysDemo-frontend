@@ -2,7 +2,7 @@ import { Col, Container, Row, Table } from "reactstrap";
 import { ClientService } from "../services/clientService";
 import { MessagingHelper } from "../models/helper/messagingHelper";
 import { ClientDTO } from "../models/client/clientDTO";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Clients() {
@@ -10,9 +10,9 @@ export default function Clients() {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
 
-  const clientService = new ClientService();
+  const clientService = useMemo(() => new ClientService(), []);
 
-  const getAll = async () => {
+  const getAll = useCallback(async () => {
     const resultGetAllClients: MessagingHelper<ClientDTO[]> =
       await clientService.GetAll();
 
@@ -23,11 +23,11 @@ export default function Clients() {
     }
 
     setClients(resultGetAllClients.obj);
-  };
+  }, [clientService]);
 
   useEffect(() => {
     getAll();
-  }, []);
+  }, [getAll]);
 
   return (
     <Container>
