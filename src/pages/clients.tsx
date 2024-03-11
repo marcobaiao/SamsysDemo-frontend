@@ -1,9 +1,10 @@
-import { Col, Container, Row } from "reactstrap";
+import { Button, Col, Container, Row } from "reactstrap";
 import { ClientService } from "../services/clientService";
 import { MessagingHelper } from "../models/helper/messagingHelper";
 import { ClientDTO } from "../models/client/clientDTO";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ClientsTable from "../components/clientsTable";
+import { Link } from "react-router-dom";
 
 export default function Clients() {
   const [clients, setClients] = useState<ClientDTO[]>([]);
@@ -30,15 +31,23 @@ export default function Clients() {
   }, [getAll]);
 
   return (
-    <Container>
-      <Row>
+    <Container fluid>
+      <Row style={{ marginBottom: "1em" }}>
         <Col xl={12}>
           <h1>Clientes</h1>
         </Col>
       </Row>
 
-      <Row style={{ marginTop: "2em" }}>
+      <Row className="mb-4">
         <Col>
+          <Link to="/clients/add">
+            <Button color="primary">Adicionar</Button>
+          </Link>
+        </Col>
+      </Row>
+
+      <Row className="d-flex justify-content-center">
+        <Col lg={9} xl={8} xxl={6}>
           <ClientsTable clients={clients} />
         </Col>
       </Row>
